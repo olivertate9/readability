@@ -1,8 +1,29 @@
 package readability;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ScoresInfo {
+
+    public static void Info(int index) {
+        List<String> scoreNames = new ArrayList<>();
+        scoreNames.add("Automated Readability Index");
+        scoreNames.add("Flesch-Kincaid readability tests");
+        scoreNames.add("Simple Measure of Gobbledygook");
+        scoreNames.add("Coleman-Liau index");
+        List<Double> scoreValues = new ArrayList<>();
+        scoreValues.add(ARI.getARIScore());
+        scoreValues.add(FK.getFKScore());
+        scoreValues.add(SMOG.getSMOGScore());
+        scoreValues.add(CL.getCLScore());
+        System.out.printf("%s: %.2f%s%.0f%s%n",
+                scoreNames.get(index),
+                scoreValues.get(index),
+                " (about ",
+                scoreRating(scoreValues.get(index)),
+                "-year-olds).");
+    }
 
     public static double scoreRating(double score) {
         double age = 0;
@@ -40,8 +61,6 @@ public class ScoresInfo {
         var scanner = new Scanner(System.in);
 
         System.out.println("The text is:\n" + text + "\n");
-
-
         System.out.printf("%s%.0f%n", "Words: ", content.getWords());
         System.out.printf("%s%.0f%n", "Sentences: ", content.getSentences());
         System.out.printf("%s%.0f%n", "Characters: ", content.getCharacters());
@@ -52,26 +71,26 @@ public class ScoresInfo {
         switch (scanner.next()) {
             case "ARI":
                 System.out.println();
-                ARI.Info();
+                Info(0);
                 break;
             case "FK":
                 System.out.println();
-                FK.Info();
+                Info(1);
                 break;
             case "SMOG":
                 System.out.println();
-                SMOG.Info();
+                Info(2);
                 break;
             case "CL":
                 System.out.println();
-                CL.Info();
+                Info(3);
                 break;
             case "all": {
                 System.out.println();
-                ARI.Info();
-                FK.Info();
-                SMOG.Info();
-                CL.Info();
+                Info(0);
+                Info(1);
+                Info(2);
+                Info(3);
                 showAverage();
                 break;
             }
